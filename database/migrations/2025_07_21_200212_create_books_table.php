@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('owner_id')->constrained('users');
+            $table->string('language')->default('pt');
             $table->timestamps();
         });
     }

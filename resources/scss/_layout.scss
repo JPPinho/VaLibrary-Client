@@ -1,0 +1,282 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--header-background);
+    box-shadow: 0 2px 4px var(--header-shadow);
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    .header-logo a {
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--text-color);
+        text-decoration: none;
+    }
+}
+
+.main-nav {
+    // This targets the top-level UL
+    > ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+    }
+
+    // This now ONLY targets top-level LI elements
+    > ul > li {
+        position: relative;
+        margin-left: 20px;
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 20px 10px;
+            display: block;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--background-color);
+            }
+        }
+    }
+}
+
+.dropdown-menu {
+    // --- Start of Changes ---
+    display: flex;
+    flex-direction: column; // Explicitly stack items vertically
+    // --- End of Changes ---
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    transition: all 0.2s ease-in-out;
+    background-color: var(--header-background);
+    box-shadow: 0 4px 12px var(--header-shadow);
+    border-radius: 4px;
+    min-width: 160px;
+    z-index: 1001;
+    list-style: none;
+    padding: 5px 0;
+
+    // This targets LI elements inside the dropdown
+    li {
+        width: 100%;
+
+        a {
+            padding: 10px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+
+.dropdown-menu.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    padding: 20px 10px;
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+        color: var(--error-color);
+    }
+}
+
+.main-content {
+    padding: 40px;
+}
+
+.content-panel {
+    background-color: var(--card-background);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-top: 5%;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.dashboard-widget {
+    background-color: #acacac;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+
+    h3 {
+        margin-top: 0;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+}
+
+.widget-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+
+    li {
+        padding: 8px 0;
+        border-bottom: 1px solid #e9ecef;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        small {
+            color: #6c757d;
+            margin-left: 8px;
+        }
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.page-item {
+    margin: 0 3px;
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: 0.5rem 0.75rem;
+        text-decoration: none;
+        background-color: var(--card-background);
+        border: 1px solid #dee2e6;
+        color: var(--foreground-color);
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+        border-radius: 0.25rem;
+    }
+
+    &:not(.active):not(.disabled) .page-link:hover {
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    &.active .page-link {
+        z-index: 3;
+        color: var(--text-light-color);
+        background-color: var(--foreground-color);
+        border-color: var(--foreground-color);
+    }
+
+    &.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+}
+
+.table-container {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden; // Ensures the table respects the container's border radius
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    // Header styles
+    thead th {
+        background-color: var(--card-background) !important;
+        padding: 16px 20px;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 500;
+        color: #6c757d;
+        text-transform: uppercase;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    // Body styles
+    tbody {
+        td {
+            padding: 16px 20px;
+            vertical-align: middle;
+            color: var(--text-color);
+        }
+
+        tr {
+            transition: background-color 0.15s ease-in-out;
+            border-bottom: 1px solid #eaedf1; // Light lines between rows
+
+            &:last-of-type {
+                border-bottom: none; // No border on the very last row
+            }
+
+            &:hover {
+                background-color: #79aaea;
+            }
+        }
+    }
+}
+
+// Language badge styles
+.badge-language {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    color: #6c757d;
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+
+// Action icon styles
+.actions-cell {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #6c757d; // Icon color
+    border-radius: 50%; // Make them circular
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+        background-color: #afd3f8; // Add a hover state
+        color: var(--text-color);
+    }
+}

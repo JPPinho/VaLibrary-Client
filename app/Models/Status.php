@@ -9,4 +9,6 @@ class Status extends Model
 {
     /** @use HasFactory<\Database\Factories\StatusFactory> */
     use HasFactory;
+
+    protected $table = 'status';
 }

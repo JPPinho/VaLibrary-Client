@@ -1,0 +1,77 @@
+.login-page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+body {
+    &.login-page {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--background-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+}
+.login-container {
+    background-color: var(--card-background);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 500;
+        font-size: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+
+            &:focus { // The '&' refers to the parent selector (.form-control)
+                outline: none;
+                border-color: var(--foreground-color);
+                box-shadow: 0 0 0 2px rgba(141, 173, 125, 0.3);
+            }
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    }
+
+    .btn-login {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: var(--foreground-color);
+        color: var(--text-light-color);
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #7b9b6d;
+        }
+    }
+}

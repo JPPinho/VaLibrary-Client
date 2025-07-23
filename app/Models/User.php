@@ -45,4 +45,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function loans() {
+        return $this->hasMany(Loan::class, 'borrower_id');
+    }
+    public function activeLoans() {
+        return $this->hasMany(Loan::class, 'borrower_id')
+            ->whereNull('returned_at');
+    }
+
+    public function notes() {
+        return $this->hasMany(Note::class, 'user_id' );
+    }
+
+    public function books() {
+        return $this->hasMany(Book::class, 'owner_id');
+    }
+
 }

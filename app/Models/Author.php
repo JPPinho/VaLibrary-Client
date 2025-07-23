@@ -9,11 +9,10 @@ class Author extends Model
 {
     /** @use HasFactory<\Database\Factories\AuthorFactory> */
     use HasFactory;
-
+    protected $table = 'author';
     public function books()
     {
-        return $this->belongsToMany(Book::class)
-            ->using(BookAuthor::class) // Tell Eloquent to use this model
-            ->withTimestamps();
+        return $this->belongsToMany(Book::class, "book_author")
+            ->using(BookAuthor::class);
     }
 }

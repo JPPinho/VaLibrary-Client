@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('invitation_code', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->foreignId('created_by_id')->constrained('users');
             $table->timestamp('expired_at')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(now());
         });
 
         Schema::table('users', function (Blueprint $table) {
