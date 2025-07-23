@@ -22,8 +22,7 @@
 }
 
 .main-nav {
-    // This targets the top-level UL
-    > ul {
+    ul {
         margin: 0;
         padding: 0;
         list-style: none;
@@ -31,8 +30,7 @@
         align-items: center;
     }
 
-    // This now ONLY targets top-level LI elements
-    > ul > li {
+    li {
         position: relative;
         margin-left: 20px;
 
@@ -51,11 +49,8 @@
 }
 
 .dropdown-menu {
-    // --- Start of Changes ---
     display: flex;
-    flex-direction: column; // Explicitly stack items vertically
-    // --- End of Changes ---
-
+    flex-direction: column;
     position: absolute;
     top: 100%;
     left: 0;
@@ -71,7 +66,42 @@
     list-style: none;
     padding: 5px 0;
 
-    // This targets LI elements inside the dropdown
+    li {
+        width: 100%;
+        margin-left: 0;
+
+        a {
+            padding: 10px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+
+.dropdown:hover > .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    transition: all 0.2s ease-in-out;
+    background-color: var(--header-background);
+    box-shadow: 0 4px 12px var(--header-shadow);
+    border-radius: 4px;
+    min-width: 160px;
+    z-index: 1001;
+    list-style: none;
+    padding: 5px 0;
+
     li {
         width: 100%;
 
@@ -210,14 +240,13 @@
     background-color: var(--card-background);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    overflow: hidden; // Ensures the table respects the container's border radius
+    overflow: hidden;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
 
-    // Header styles
     thead th {
         background-color: var(--card-background) !important;
         padding: 16px 20px;
@@ -229,7 +258,6 @@
         border-bottom: 1px solid #dee2e6;
     }
 
-    // Body styles
     tbody {
         td {
             padding: 16px 20px;
@@ -239,10 +267,10 @@
 
         tr {
             transition: background-color 0.15s ease-in-out;
-            border-bottom: 1px solid #eaedf1; // Light lines between rows
+            border-bottom: 1px solid #eaedf1;
 
             &:last-of-type {
-                border-bottom: none; // No border on the very last row
+                border-bottom: none;
             }
 
             &:hover {
@@ -252,7 +280,6 @@
     }
 }
 
-// Language badge styles
 .badge-language {
     display: inline-block;
     padding: 4px 8px;
@@ -264,7 +291,6 @@
     border-radius: 4px;
 }
 
-// Action icon styles
 .actions-cell {
     text-align: center;
     white-space: nowrap;
@@ -276,12 +302,12 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    color: #6c757d; // Icon color
-    border-radius: 50%; // Make them circular
+    color: #6c757d;
+    border-radius: 50%;
     transition: background-color 0.15s ease, color 0.15s ease;
 
     &:hover {
-        background-color: #afd3f8; // Add a hover state
+        background-color: #afd3f8;
         color: var(--text-color);
     }
 }
