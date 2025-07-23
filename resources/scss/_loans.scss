@@ -1,0 +1,36 @@
+.status-badge, .role-badge {
+    padding: .3em .65em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+
+.status-active {
+    background-color: #28a745; // Green
+}
+
+.status-overdue {
+    background-color: #dc3545; // Red
+}
+
+.status-returned {
+    background-color: #6c757d; // Gray
+}
+
+.role-badge {
+    color: #212529;
+    font-size: .8em;
+}
+
+.role-borrowing {
+    background-color: #ffc107; // Yellow
+}
+
+.role-lending {
+    background-color: #17a2b8; // Teal
+}
