@@ -1,0 +1,100 @@
+// resources/scss/_show-page.scss
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    &:hover {
+        color: var(--foreground-color);
+    }
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 999px; // Pill shape
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #fff;
+}
+
+.status-available {
+    background-color: var(--foreground-color);
+}
+
+.status-on-loan {
+    background-color: #dc3545; // A red color for loaned out
+}
+
+.status-badge-small {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.show-grid {
+    display: grid;
+    gap: 2rem;
+
+    grid-template-columns: 1fr;
+
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.show-widget {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.widget-title {
+    margin-top: 0;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+        padding: 0.5rem 0;
+        strong {
+            color: #495057;
+        }
+    }
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    th, td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+    thead th {
+        font-weight: 500;
+        color: #6c757d;
+    }
+}
+
+.no-history-text {
+    color: #6c757d;
+    font-style: italic;
+}

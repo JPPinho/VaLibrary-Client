@@ -15,7 +15,8 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/books', [BooksController::class, 'index'])->name('books.index');
+Route::resource('books', BooksController::class)->middleware('auth');
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth')

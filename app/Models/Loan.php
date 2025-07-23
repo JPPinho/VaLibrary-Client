@@ -13,8 +13,9 @@ class Loan extends Model
     protected $table = 'loan';
 
     public $casts = [
-        'return_date' => 'datetime',
+        'returned_at' => 'datetime',
         'due_at' => 'datetime',
+        'created_at' => 'datetime',
     ];
 
     public function borrower() {

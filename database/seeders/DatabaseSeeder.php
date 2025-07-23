@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 AdminSeeder::class,
+                LanguageSeeder::class,
                 BookAndAuthorSeeder::class,
                 StatusSeeder::class,
-                DemoDataSeeder::class
+                DemoDataSeeder::class,
+                LoansSeeder::class
             ]
         );
     }

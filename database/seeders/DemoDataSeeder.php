@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Language;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Book;
@@ -24,7 +25,11 @@ class DemoDataSeeder extends Seeder
             $inviteCode = InvitationCode::firstOrCreate(
                 ['code' => 'DEMO-SEED-CODE'],
             );
-
+            $languageIds = Language::pluck('id');
+            if ($languageIds->isEmpty()) {
+                $this->command->error('No languages found. Please run the LanguageSeeder first.');
+                return; // Stop the seeder
+            }
             $allUsers = collect();
 
             for ($i = 1; $i <= 10; $i++) {
@@ -47,7 +52,7 @@ class DemoDataSeeder extends Seeder
                     $book = Book::create([
                         'name' => "User {$i} - Book {$j}",
                         'owner_id' => $user->id,
-                        'language' => ($j % 2 == 0) ? 'en' : 'pt_pt'
+                        'language_id' => $languageIds->random()
                     ]);
 
                     $book->authors()->attach($author->id);

@@ -19,10 +19,9 @@
         </div>
 
         <div class="dashboard-widget">
-            <h3>Books You've Borrowed ({{ $user->activeLoans->count() }})</h3>
+            <h3>Books You've Borrowed ({{ $user->loans->count() }})</h3>
             <ul class="widget-list">
                 @forelse ($user->loans as $loan)
-                    {{-- Access the book's name through the relationship --}}
                     <li>
                         {{ $loan->book->name }}
                         <small>(Due: {{ $loan->due_at ? $loan->due_at->toFormattedDateString() : 'N/A' }})</small>

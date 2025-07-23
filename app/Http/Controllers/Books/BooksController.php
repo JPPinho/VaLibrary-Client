@@ -5,16 +5,22 @@ namespace App\Http\Controllers\Books;
 use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Language;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class BooksController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = Book::with('authors', 'owner');
+        $query = Book::with('authors', 'owner', 'language');
 
 
         $query->when($request->has('my_collection'), function ($q) {
@@ -37,8 +43,8 @@ class BooksController extends Controller
             });
         });
 
-        $query->when($request->filled('language'), function ($q) use ($request) {
-            $q->where('language', $request->language);
+        $query->when($request->filled('language_id'), function ($q) use ($request) {
+            $q->where('language_id', $request->language_id);
         });
 
         $query->when($request->filled('available'), function ($q) {
@@ -48,7 +54,7 @@ class BooksController extends Controller
         });
 
         $authors = Author::orderBy('name')->get();
-        $languages = Book::select('language')->distinct()->orderBy('language')->get();
+        $languages = Language::orderBy('name')->get();
 
         $books = $query->latest()->paginate(15)->withQueryString();
 
@@ -64,9 +70,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create',
-        [
-            'authors' => Author::all()
+        return view('books.create', [
+            'authors' => Author::orderBy('name')->get(),
+            'languages' => Language::orderBy('name')->get(),
         ]);
     }
 
@@ -75,7 +81,28 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'language_id' => 'required|exists:languages,id',
+            'authors' => 'required|array|min:1',
+            'authors.*' => 'exists:author,id',
+        ]);
+
+        try {
+            DB::transaction(function () use ($validated) {
+                $book = Book::create([
+                    'name' => $validated['name'],
+                    'language_id' => $validated['language_id'],
+                    'owner_id' => auth()->id(),
+                ]);
+
+                $book->authors()->sync($validated['authors']);
+            });
+        } catch (\Exception $e) {
+            return back()->with('error', 'There was a problem creating the book: ' . $e->getMessage())->withInput();
+        }
+
+        return redirect()->route('books.index')->with('success', 'Book created successfully!');
     }
 
     /**
@@ -83,7 +110,11 @@ class BooksController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        $book->load('authors', 'owner', 'loans.borrower', 'notes.user', 'notes.status');
+
+        return view('books.show', [
+            'book' => $book,
+        ]);
     }
 
     /**
@@ -91,7 +122,15 @@ class BooksController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $this->authorize('update', $book);
+        $authors = Author::orderBy('name')->get();
+        $languages = Language::orderBy('name')->get();
+
+        return view('books.edit', [
+            'book' => $book,
+            'authors' => $authors,
+            'languages' => $languages,
+        ]);
     }
 
     /**
@@ -99,7 +138,28 @@ class BooksController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $this->authorize('update', $book);
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('book')->ignore($book->id)],
+            'language_id' => 'required|exists:languages,id',
+            'authors' => 'required|array|min:1',
+            'authors.*' => 'exists:author,id',
+        ]);
+
+        try {
+            DB::transaction(function () use ($validated, $book) {
+                $book->update([
+                    'name' => $validated['name'],
+                    'language_id' => $validated['language_id'],
+                ]);
+
+                $book->authors()->sync($validated['authors']);
+            });
+        } catch (\Exception $e) {
+            return back()->with('error', 'There was a problem updating the book.')->withInput();
+        }
+
+        return redirect()->route('books.show', $book)->with('success', 'Book updated successfully!');
     }
 
     /**
