@@ -3,22 +3,31 @@ return [
     [
         'text' => 'Dashboard',
         'route' => 'dashboard',
+        'role' => ''
     ],
     [
         'text' => 'Loans',
-        'route' => 'loans.index'
+        'route' => 'loans.index',
+        'role' => ''
     ],
     [
         'text' => 'Books',
         'route' => 'books.index',
+        'role' => ''
+    ],
+    [
+        'text' => 'Notes',
+        'route' => 'notes.index',
+        'role' => ''
     ],
     [
         'text' => 'Users',
         'route' => '#',
+        'role' => 'admin',
         'children' => [
             [
                 'text' => 'All Users',
-                'route' => 'user.index',
+                'route' => 'users.index',
             ],
             [
                 'text' => 'Add New User',

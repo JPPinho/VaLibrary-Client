@@ -1,8 +1,6 @@
 .filter-bar {
     background-color: var(--card-background) !important;
     padding: 1.25rem;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
 }
 
 .filter-grid {
@@ -17,7 +15,7 @@
 }
 
 .form-control {
-    width: 100%;
+    width: 90%;
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
     background-color: #fff; // Keep input backgrounds white for readability
@@ -46,10 +44,11 @@
 .filter-group-buttons {
     display: flex;
     gap: 0.5rem;
+    justify-content: flex-start;
+    margin-top: 1rem;
 
-    // Target buttons specifically within the filter bar
     .btn-primary {
-        background-color: #6c757d; // A neutral gray for the primary filter button
+        background-color: #6c757d;
         border-color: #6c757d;
         color: #fff;
 
@@ -60,7 +59,7 @@
     }
 
     .btn-secondary {
-        background-color: #e9ecef; // A light gray for the clear button
+        background-color: #e9ecef;
         border-color: #e9ecef;
         color: #495057;
 
@@ -81,4 +80,25 @@
     border: 1px solid #dee2e6;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
+}
+
+
+.filter-group-search {
+    flex-grow: 1;
+    position: relative;
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        pointer-events: none;
+    }
+
+    .form-control {
+        padding-left: 45px;
+        height: 48px;
+        border-radius: 8px;
+    }
 }

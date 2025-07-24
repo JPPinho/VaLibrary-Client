@@ -18,10 +18,20 @@ class Loan extends Model
         'created_at' => 'datetime',
     ];
 
+    protected $fillable = [
+        'borrower_id',
+        'book_id',
+        'due_at',
+        'returned_at',
+    ];
+
     public function borrower() {
         return $this->belongsTo(User::class, 'borrower_id');
     }
     public function book() {
         return $this->belongsTo(Book::class);
+    }
+    public function fulfilledLoan() {
+        return $this->hasOne(LoanRequest::class, 'loan_id');
     }
 }

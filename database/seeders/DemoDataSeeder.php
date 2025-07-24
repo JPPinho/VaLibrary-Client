@@ -35,7 +35,7 @@ class DemoDataSeeder extends Seeder
             for ($i = 1; $i <= 10; $i++) {
                 $user = User::create([
                     'name' => "User {$i}",
-                    'email' => "user{$i}@example.com",
+                    'email' => "users{$i}@example.com",
                     'password' => Hash::make('password'),
                     'role' => 'regular',
                     'invitation_code_id' => $inviteCode->id,

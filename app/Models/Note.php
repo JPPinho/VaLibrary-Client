@@ -13,9 +13,21 @@ class Note extends Model
 
     protected $table = 'note';
 
+    protected $fillable = [
+        'user_id',
+        'book_id',
+        'status_id',
+        'body',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class);
     }
 
     public function status(): BelongsTo

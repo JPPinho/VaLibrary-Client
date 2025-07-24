@@ -27,7 +27,7 @@
                         <tbody>
                         @endif
                         <tr>
-                            <td>{{ $loan->book->name }}</td>
+                            <td>{{ $loan->id }}{{ $loan->book->name }}</td>
                             <td>{{ $loan->borrower->name }}</td>
                             <td>{{ $loan->book->owner->name }}</td>
 

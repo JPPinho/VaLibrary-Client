@@ -15,13 +15,21 @@ use Illuminate\Validation\Rule;
 class BooksController extends Controller
 {
     use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = Book::with('authors', 'owner', 'language');
-
+        $query = Book::with([
+            'authors',
+            'owner',
+            'language',
+            'loanRequests' => function ($query) {
+                $query->where('borrower_id', auth()->id())
+                    ->whereNull('loan_id');
+            }
+        ]);
 
         $query->when($request->has('my_collection'), function ($q) {
             $q->where('owner_id', auth()->id());
@@ -49,7 +57,7 @@ class BooksController extends Controller
 
         $query->when($request->filled('available'), function ($q) {
             $q->whereDoesntHave('loans', function ($subQ) {
-                $subQ->whereNull('returned_at'); // No loans where returned_at is null
+                $subQ->whereNull('returned_at');
             });
         });
 
@@ -111,9 +119,14 @@ class BooksController extends Controller
     public function show(Book $book)
     {
         $book->load('authors', 'owner', 'loans.borrower', 'notes.user', 'notes.status');
+        $user = Auth::user();
+
+        $isOwner = $user->id === $book->owner_id;
+        $hasBorrowed = $book->loans()->where('borrower_id', $user->id)->exists();
 
         return view('books.show', [
             'book' => $book,
+            'canAddNote' => $isOwner || $hasBorrowed || $user->role === 'admin',
         ]);
     }
 

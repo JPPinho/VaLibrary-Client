@@ -5,7 +5,7 @@
 
     <nav class="main-nav">
         <ul>
-            @include('partials._nav_items', ['items' => config('navigation')])
+            @include('partials._nav_items', ['items' => $mainNav])
             <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

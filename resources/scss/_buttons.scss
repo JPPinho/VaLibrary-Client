@@ -1,0 +1,240 @@
+.btn-request {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light-color);
+    background-image: linear-gradient(45deg, var(--background-color) 0%, var(--foreground-color) 100%);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2.5px;
+        stroke: var(--text-light-color);
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    &:active {
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+}
+
+.btn-destructive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-light-color);
+    background-color: var(--error-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        stroke-width: 2.5px;
+        stroke: var(--text-light-color);
+    }
+
+    &:hover {
+        background-color: #b71c1c;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+.btn-approve {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-light-color);
+    background-color: #28a745;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        stroke-width: 2.5px;
+        stroke: var(--text-light-color);
+    }
+
+    &:hover {
+        background-color: #218838;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+.btn-return {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-light-color);
+    background-color: #0d6efd; // Bootstrap Blue
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        stroke-width: 2.5px;
+        stroke: var(--text-light-color);
+    }
+
+    &:hover {
+        background-color: #0b5ed7;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+.action-icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--text-color);
+
+    &:hover {
+        color: var(--background-color);
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+// Add at the end of _buttons.scss
+
+.btn-secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    background-color: #e9ecef;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #dee2e6;
+    }
+}
+
+.filter-group-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label {
+        font-weight: 500;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    input[type="checkbox"] {
+        appearance: none;
+        background-color: #fff;
+        margin: 0;
+        font: inherit;
+        color: currentColor;
+        width: 1.25em;
+        height: 1.25em;
+        border: 2px solid var(--foreground-color);
+        border-radius: 4px;
+        transform: translateY(-0.075em);
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &::before {
+            content: "";
+            width: 0.75em;
+            height: 0.75em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--text-light-color);
+            transform-origin: bottom left;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        &:checked {
+            background-color: var(--foreground-color);
+            &::before {
+                transform: scale(1);
+            }
+        }
+    }
+}
+
+.fab-add-note {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-image: linear-gradient(45deg, var(--background-color) 0%, var(--foreground-color) 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    &:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+}

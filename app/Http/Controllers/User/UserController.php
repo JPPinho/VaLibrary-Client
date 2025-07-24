@@ -23,7 +23,7 @@ class UserController extends Controller
 
         $users = $query->paginate(15);
 
-        return view('user.index', [
+        return view('users.index', [
             'users' => $users
         ]);
     }
@@ -56,10 +56,12 @@ class UserController extends Controller
         $user->load([
             'books',
             'activeLoans.book',
-            'lentBooks.loans.borrower'
+            'lentBooks.loans.borrower',
+            'loanRequests',
+            'books.loanRequests'
         ]);
 
-        return view('user.show', [
+        return view('users.show', [
             'user' => $user
         ]);
     }

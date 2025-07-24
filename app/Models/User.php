@@ -69,4 +69,8 @@ class User extends Authenticatable
             });
     }
 
+    public function loanRequests() {
+        return $this->hasMany(LoanRequest::class, 'borrower_id');
+    }
+
 }

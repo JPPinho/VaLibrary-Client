@@ -53,4 +53,28 @@ class Book extends Model
     {
         return $this->belongsTo(Language::class);
     }
+
+    public function loanRequests()
+    {
+        return $this->hasMany(LoanRequest::class, 'book_id');
+    }
+
+    public function isOwnedBy(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+        return $this->owner_id === $user->id;
+    }
+    public function hasPendingRequestFrom(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return $this->loanRequests()
+            ->where('borrower_id', $user->id)
+            ->whereNull('loan_id')
+            ->exists();
+    }
 }

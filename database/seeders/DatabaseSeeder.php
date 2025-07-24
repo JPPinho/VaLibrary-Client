@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
                 BookAndAuthorSeeder::class,
                 StatusSeeder::class,
                 DemoDataSeeder::class,
-                LoansSeeder::class
+                LoansSeeder::class,
+                LoanRequestSeeder::class,
+                NotesSeeder::class,
             ]
         );
     }

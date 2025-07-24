@@ -19,7 +19,7 @@ class BookPolicy
 
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the users can update the model.
      * This method is now only checked for non-admin users.
      */
     public function update(User $user, Book $book): bool

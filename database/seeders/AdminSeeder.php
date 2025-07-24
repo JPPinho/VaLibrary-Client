@@ -51,9 +51,9 @@ class AdminSeeder extends Seeder
         );
 
         if ($admin->wasRecentlyCreated) {
-            $this->command->info('Admin user created successfully.');
+            $this->command->info('Admin users created successfully.');
         } else {
-            $this->command->info('Admin user already exists. Seeder skipped.');
+            $this->command->info('Admin users already exists. Seeder skipped.');
         }
     }
 }

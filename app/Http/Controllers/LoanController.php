@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Loan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
@@ -24,6 +25,7 @@ class LoanController extends Controller
                         $bookQuery->where('owner_id', $user->id);
                     });
             });
+
         }
 
         $loans = $query->paginate(15);
@@ -68,9 +70,21 @@ class LoanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Loan $loan)
+    public function update(Loan $loan)
     {
-        //
+        $ownerId = $loan->book->owner_id;
+
+        if (Auth::id() !== $ownerId && Auth::user()->role !== 'admin') {
+            abort(403, 'You are not authorized to modify this loan.');
+        }
+
+        if ($loan->returned_at) {
+            return back()->with('error', 'This loan has already been marked as returned.');
+        }
+
+        $loan->update(['returned_at' => Carbon::now()]);
+
+        return back()->with('status', 'Book successfully marked as returned.');
     }
 
     /**
