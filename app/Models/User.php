@@ -62,4 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(Book::class, 'owner_id');
     }
 
+    public function lentBooks() {
+        return $this->hasMany(Book::class, 'owner_id')
+            ->whereHas('loans', function ($query) {
+                $query->whereNull('returned_at');
+            });
+    }
+
 }

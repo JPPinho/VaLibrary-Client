@@ -6,7 +6,6 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Loan History</h1>
-            <a href="#" class="btn btn-primary">Request a New Loan</a>
         </div>
 
         @forelse ($loans as $loan)
@@ -23,18 +22,15 @@
                             @endif
                             <th>Status</th>
                             <th>Loaned On</th>
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @endif
-
                         <tr>
                             <td>{{ $loan->book->name }}</td>
                             <td>{{ $loan->borrower->name }}</td>
                             <td>{{ $loan->book->owner->name }}</td>
 
-                            {{-- This column only shows for regular users --}}
                             @if (Auth::user()->role !== 'admin')
                                 <td>
                                     @if ($loan->borrower_id === Auth::id())
@@ -55,9 +51,6 @@
                                 @endif
                             </td>
                             <td>{{ $loan->created_at->toFormattedDateString() }}</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-info">Details</a>
-                            </td>
                         </tr>
 
                         @if ($loop->last)

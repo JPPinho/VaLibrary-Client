@@ -37,7 +37,7 @@ class DemoDataSeeder extends Seeder
                     'name' => "User {$i}",
                     'email' => "user{$i}@example.com",
                     'password' => Hash::make('password'),
-                    'role' => 'user',
+                    'role' => 'regular',
                     'invitation_code_id' => $inviteCode->id,
                 ]);
                 $allUsers->push($user);

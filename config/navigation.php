@@ -6,11 +6,11 @@ return [
     ],
     [
         'text' => 'Loans',
-        'route' => '#'
+        'route' => 'loans.index'
     ],
     [
         'text' => 'Books',
-        'route' => '#',
+        'route' => 'books.index',
     ],
     [
         'text' => 'Users',
@@ -18,7 +18,7 @@ return [
         'children' => [
             [
                 'text' => 'All Users',
-                'route' => '#',
+                'route' => 'user.index',
             ],
             [
                 'text' => 'Add New User',
