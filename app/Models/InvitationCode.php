@@ -11,5 +11,13 @@ class InvitationCode extends Model
     use HasFactory;
 
     protected $table = 'invitation_code';
+
+    protected $fillable = [
+        'code',
+    ];
     const UPDATED_AT = null;
+
+    public function usedBy() {
+        return $this->hasOne(User::class);
+    }
 }

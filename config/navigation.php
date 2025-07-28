@@ -30,12 +30,8 @@ return [
                 'route' => 'users.index',
             ],
             [
-                'text' => 'Add New User',
-                'route' => '#',
-            ],
-            [
-                'text' => 'Invitation Codes',
-                'route' => '#',
+                'text' => 'Share Invitation Code',
+                'route' => 'invitation-code.show',
             ],
         ],
     ],
