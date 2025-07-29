@@ -238,3 +238,38 @@
         box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     }
 }
+
+.fab-scan-book {
+    display: none; // Hidden by default on desktop
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--foreground-color);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    z-index: 1000;
+
+    svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+// Media query to show the button ONLY on mobile/tablet devices
+@media (max-width: 768px) {
+    .fab-scan-book {
+        display: flex;
+    }
+}

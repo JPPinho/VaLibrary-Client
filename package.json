@@ -19,6 +19,7 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
+        "html5-qrcode": "^2.3.8",
         "jquery": "^3.7.1",
         "tom-select": "^2.4.3"
     }

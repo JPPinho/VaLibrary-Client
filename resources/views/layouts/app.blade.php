@@ -28,6 +28,8 @@
         </div>
     </main>
 </div>
-
+<a href="{{ route('books.scan') }}" class="fab-scan-book" aria-label="Scan ISBN">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.29 1.41"></path><path d="M12.5 21a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path><path d="M3.5 21a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path><path d="M14 5h6"></path><path d="M17 2v6"></path></svg>
+</a>
 </body>
 </html>

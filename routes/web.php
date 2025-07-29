@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Books\BooksController;
+use App\Http\Controllers\Books\ScannerController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\InvitationCodes\InvitationCodesController;
 use App\Http\Controllers\LoanController;
@@ -21,7 +22,9 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
+Route::get('/books/scan', function () {
+    return view('books.scan');
+})->name('books.scan');
 Route::resource('books', BooksController::class)->middleware('auth');
 Route::resource('loans', LoanController::class)->middleware('auth');
 Route::resource('users', UserController::class)->middleware('auth');
@@ -33,3 +36,6 @@ Route::get('invitation-code', [InvitationCodesController::class, 'show'])->name(
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('dashboard');
+
+
+Route::post('/books/scan', [ScannerController::class, 'store'])->name('books.storeFromIsbn');

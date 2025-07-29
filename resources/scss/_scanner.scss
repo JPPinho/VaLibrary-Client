@@ -1,0 +1,16 @@
+.scanner-container {
+    text-align: center;
+}
+
+.scanner-box {
+    width: 100%;
+    max-width: 500px;
+    margin: 2rem auto;
+    border: 2px dashed var(--foreground-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.hidden-form {
+    display: none;
+}
