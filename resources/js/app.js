@@ -44,14 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function onScanFailure(error) {
-            // This function is called frequently, so it's best to keep it quiet
-            // or use it for subtle UI feedback if desired.
+            console.log(error);
         }
 
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "scanner-region",
-            { fps: 10, qrbox: { width: 250, height: 150 } },
-            false // verbose = false
+            { fps: 1, qrbox: { width: 250, height: 150 } },
+            true // verbose = false
         );
 
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);

@@ -1,9 +1,8 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig(({ command, mode }) => {
-    // This correctly loads the .env file variables
-    const env = process.env;
+    const env = loadEnv(mode, process.cwd(), '');
 
     return {
         plugins: [
@@ -14,9 +13,15 @@ export default defineConfig(({ command, mode }) => {
         ],
         server: {
             host: '0.0.0.0',
+            port: 5173,
+            https: {
+                key: '/etc/nginx/certs/nginx.key',
+                cert: '/etc/nginx/certs/nginx.crt',
+            },
+            cors: true,
             hmr: {
-                host: env.APP_URL.replace('http://', ''),
+                host: env.APP_URL.replace('https://', ''),
             }
-        }
+        },
     };
 });
