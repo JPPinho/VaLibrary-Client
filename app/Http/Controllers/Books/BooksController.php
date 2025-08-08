@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Books;
 use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\ImageProcessingJob;
 use App\Models\Language;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -89,28 +90,47 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'language_id' => 'required|exists:languages,id',
-            'authors' => 'required|array|min:1',
-            'authors.*' => 'exists:author,id',
-        ]);
+        if ($request->filled('name')) {
+            // This part for manual book creation remains the same
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'language_id' => 'required|exists:languages,id',
+                'authors' => 'required|array|min:1',
+                'authors.*' => 'exists:authors,id',
+            ]);
 
-        try {
-            DB::transaction(function () use ($validated) {
-                $book = Book::create([
-                    'name' => $validated['name'],
-                    'language_id' => $validated['language_id'],
-                    'owner_id' => auth()->id(),
-                ]);
+            $book = Book::create([
+                'name' => $validated['name'],
+                'owner_id' => Auth::id(),
+                'language_id' => $validated['language_id'],
+            ]);
 
-                $book->authors()->sync($validated['authors']);
-            });
-        } catch (\Exception $e) {
-            return back()->with('error', 'There was a problem creating the book: ' . $e->getMessage())->withInput();
+            $book->authors()->attach($validated['authors']);
+            return redirect()->route('books.index')->with('status', 'Book created successfully!');
+
+        } elseif ($request->hasFile('images')) {
+            // This is the updated logic for asynchronous processing
+            $validated = $request->validate([
+                'images' => 'required|array',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            $filePaths = [];
+            foreach ($validated['images'] as $image) {
+                $path = $image->store('image-uploads', 's3');
+
+                $filePaths[] = $path;
+            }
+
+            ImageProcessingJob::create([
+                'user_id' => Auth::id(),
+                'file_paths' => $filePaths,
+                'status_id' => 3,
+            ]);
+            return redirect()->route('dashboard')->with('status', 'Images uploaded successfully and are scheduled for processing.');
         }
 
-        return redirect()->route('books.index')->with('success', 'Book created successfully!');
+        return back()->with('error', 'You must provide either book details or upload images.');
     }
 
     /**

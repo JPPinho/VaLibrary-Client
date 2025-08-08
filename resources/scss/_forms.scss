@@ -21,3 +21,38 @@
     font-size: 0.875rem;
     margin-top: 0.25rem;
 }
+
+
+// Add these at the end of your _forms.scss file
+
+.tab-navigation {
+    display: flex;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 2rem;
+}
+
+.tab-link {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6c757d;
+    position: relative;
+    top: 2px;
+    border-bottom: 2px solid transparent;
+
+    &.active {
+        color: var(--background-color);
+        border-bottom-color: var(--background-color);
+    }
+}
+
+.tab-content {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}

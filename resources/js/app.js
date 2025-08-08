@@ -6,6 +6,7 @@ import '../scss/app.scss';
 
 import TomSelect from "tom-select";
 import "tom-select/dist/css/tom-select.bootstrap5.css";
+import { Html5QrcodeScanner } from "html5-qrcode";
 
 $(function() {
     $('.main-nav .dropdown').hover(
@@ -19,15 +20,21 @@ $(function() {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.tom-select').forEach((el) => {
-        new TomSelect(el, {});
-    });
-});
+    if (document.querySelector('.tom-select')) {
+        new TomSelect('.tom-select', {
+            plugins: ['remove_button'], // Adds a little 'x' to remove selected items
+            create: false, // Set to true if you want to allow creating new authors on the fly
+            // For more options, visit the Tom Select documentation
+        });
+    }
 
-import { Html5QrcodeScanner } from "html5-qrcode";
+    // You can also initialize single selects for a consistent look
+    if (document.querySelector('.tom-select-single')) {
+        new TomSelect('.tom-select-single', {
+            create: false,
+        });
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if we are on the scanner page by looking for the scanner region element
     if (document.getElementById('scanner-region')) {
         let isScanning = false;
 
@@ -56,3 +63,4 @@ document.addEventListener('DOMContentLoaded', () => {
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     }
 });
+

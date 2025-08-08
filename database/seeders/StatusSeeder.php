@@ -15,5 +15,7 @@ class StatusSeeder extends Seeder
     {
         Status::firstOrCreate(['status_code' => 'Verified']);
         Status::firstOrCreate(['status_code' => 'Unverified']);
+        Status::firstOrCreate(['status_code' => 'Pending']);
+        Status::firstOrCreate(['status_code' => 'Executed']);
     }
 }
