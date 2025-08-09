@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Notes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreImageNoteRequest;
+use App\Http\Requests\StoreNoteRequest;
 use App\Models\Book;
 use App\Models\Note;
 use App\Models\Status;
@@ -69,23 +71,12 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreNoteRequest $request)
     {
-        $validated = $request->validate([
-            'book_id' => 'required|exists:book,id',
-            'body' => 'required|string|min:10',
-            'page' => 'nullable|integer',
-        ]);
+        $validated = $request->validated();
 
         $book = Book::find($validated['book_id']);
         $user = Auth::user();
-
-        $isOwner = $user->id === $book->owner_id;
-        $hasBorrowed = $book->loans()->where('borrower_id', $user->id)->exists();
-
-        if (!$isOwner && !$hasBorrowed) {
-            abort(403, 'You are not authorized to add a note to this book.');
-        }
 
         Note::create([
             'user_id' => $user->id,
@@ -137,11 +128,9 @@ class NoteController extends Controller
         ]);
     }
 
-    public function storeImageNote(Request $request, Book $book)
+    public function storeImageNote(StoreImageNoteRequest $request, Book $book)
     {
-        $validated = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $validated = $request->validated();
 
         $note = Note::create([
             'user_id' => Auth::id(),

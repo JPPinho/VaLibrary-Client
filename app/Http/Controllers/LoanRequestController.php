@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLoanRequestRequest;
 use App\Models\Book;
 use App\Models\Loan;
 use App\Models\LoanRequest;
@@ -31,11 +32,9 @@ class LoanRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLoanRequestRequest $request)
     {
-        $validated = $request->validate([
-            'book_id' => 'required|exists:book,id',
-        ]);
+        $validated = $request->validated();
 
         $book = Book::find($validated['book_id']);
         $user = Auth::user();

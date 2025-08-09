@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Books;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\ImageProcessingJob;
@@ -88,33 +90,22 @@ class BooksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
+        $validated = $request->validated();
+
         if ($request->filled('name')) {
             // This part for manual book creation remains the same
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'language_id' => 'required|exists:languages,id',
-                'authors' => 'required|array|min:1',
-                'authors.*' => 'exists:authors,id',
-            ]);
-
             $book = Book::create([
                 'name' => $validated['name'],
                 'owner_id' => Auth::id(),
                 'language_id' => $validated['language_id'],
             ]);
-
             $book->authors()->attach($validated['authors']);
             return redirect()->route('books.index')->with('status', 'Book created successfully!');
 
         } elseif ($request->hasFile('images')) {
             // This is the updated logic for asynchronous processing
-            $validated = $request->validate([
-                'images' => 'required|array',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
-
             $filePaths = [];
             foreach ($validated['images'] as $image) {
                 $path = $image->store('image-uploads', 's3');

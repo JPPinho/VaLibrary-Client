@@ -7,11 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreLoanRequestRequest extends FormRequest
 {
     /**
-     * Determine if the users is authorized to make this request.
+     * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreLoanRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'book_id' => 'required|exists:book,id',
         ];
     }
 }

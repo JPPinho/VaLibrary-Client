@@ -11,7 +11,7 @@ class StoreBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,20 @@ class StoreBookRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        if ($this->filled('name')) {
+            return [
+                'name' => 'required|string|max:255',
+                'language_id' => 'required|exists:languages,id',
+                'authors' => 'required|array|min:1',
+                'authors.*' => 'exists:author,id',
+            ];
+        } elseif ($this->hasFile('images')) {
+            return [
+                'images' => 'required|array',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ];
+        }
+
+        return [];
     }
 }

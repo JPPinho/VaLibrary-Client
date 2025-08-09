@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Books;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreScanRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Language;
@@ -18,9 +19,9 @@ class ScannerController extends Controller
         'eng' => 'en',
     ];
 
-    public function store(Request $request)
+    public function store(StoreScanRequest $request)
     {
-        $validated = $request->validate(['isbn' => 'required|string']);
+        $validated = $request->validated();
         $isbn = $validated['isbn'];
 
         $response = Http::get("https://openlibrary.org/search.json?isbn={$isbn}");
